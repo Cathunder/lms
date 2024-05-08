@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 public class HistoryDto {
     private String userId;
-    private LocalDateTime loginTime;
+    private LocalDateTime loginDt;
     private String connectIp;
     private String connectUserAgent;
 }

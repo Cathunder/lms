@@ -5,12 +5,15 @@ import com.zerobase.fastlms.admin.mapper.MemberMapper;
 import com.zerobase.fastlms.admin.model.MemberParam;
 import com.zerobase.fastlms.components.MailComponents;
 import com.zerobase.fastlms.course.model.ServiceResult;
+import com.zerobase.fastlms.member.entity.History;
 import com.zerobase.fastlms.member.entity.Member;
 import com.zerobase.fastlms.member.entity.MemberCode;
 import com.zerobase.fastlms.member.exception.MemberNotEmailAuthException;
+import com.zerobase.fastlms.member.exception.MemberNotExistException;
 import com.zerobase.fastlms.member.exception.MemberStopUserException;
 import com.zerobase.fastlms.member.model.MemberInput;
 import com.zerobase.fastlms.member.model.ResetPasswordInput;
+import com.zerobase.fastlms.member.repository.HistoryRepository;
 import com.zerobase.fastlms.member.repository.MemberRepository;
 import com.zerobase.fastlms.member.service.MemberService;
 import com.zerobase.fastlms.util.PasswordUtils;
@@ -36,6 +39,7 @@ import java.util.UUID;
 public class MemberServiceImpl implements MemberService {
     
     private final MemberRepository memberRepository;
+    private final HistoryRepository historyRepository;
     private final MailComponents mailComponents;
     
     private final MemberMapper memberMapper;
@@ -264,6 +268,7 @@ public class MemberServiceImpl implements MemberService {
         member.setZipcode("");
         member.setAddr("");
         member.setAddrDetail("");
+        member.setLoginDt(null);
         memberRepository.save(member);
         
         return new ServiceResult();
@@ -299,6 +304,26 @@ public class MemberServiceImpl implements MemberService {
         }
 
         return new User(member.getUserId(), member.getPassword(), grantedAuthorities);
+    }
+
+    @Override
+    public void updateHistory(String username, String clientIp, String userAgent) {
+
+        LocalDateTime now = LocalDateTime.now();
+
+        Member member = memberRepository.findById(username)
+                .orElseThrow(() -> new MemberNotExistException("회원이 존재하지 않습니다."));
+        member.setLoginDt(now);
+        memberRepository.save(member);
+
+        History history = History.builder()
+                .userId(username)
+                .connectIp(clientIp)
+                .connectUserAgent(userAgent)
+                .loginTime(now)
+                .build();
+
+        historyRepository.save(history);
     }
 }
 

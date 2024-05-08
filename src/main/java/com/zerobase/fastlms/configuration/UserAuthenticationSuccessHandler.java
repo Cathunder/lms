@@ -1,7 +1,5 @@
 package com.zerobase.fastlms.configuration;
 
-import com.zerobase.fastlms.member.service.HistoryService;
-import com.zerobase.fastlms.util.RequestUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -17,20 +15,12 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-    private final HistoryService historyService;
-
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
-        String clientIp = RequestUtils.getClientIp(request);
-        String userAgent = RequestUtils.getUserAgent(request);
-
         boolean isAdmin = userDetails.getAuthorities().stream()
                 .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
-
-        historyService.saveHistory(username, clientIp, userAgent);
 
         if (isAdmin) {
             response.sendRedirect("/admin/main.do");
