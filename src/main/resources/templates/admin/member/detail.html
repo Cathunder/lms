@@ -12,6 +12,50 @@
             border:solid 1px #000;
         }
 
+        .table-list table {
+            width: 100%;
+            /*border-collapse: collapse;*/
+        }
+        .table-list td, .table-list th {
+            border: transparent;
+            padding: 5px;
+            text-align: center;
+        }
+        .table-list th:nth-child(1) {
+            width: 5%;
+            padding-top: 12px;
+            padding-bottom: 12px;
+            background-color: black;
+            color: white;
+        }
+        .table-list th:nth-child(2) {
+            width: 10%;
+            padding-top: 12px;
+            padding-bottom: 12px;
+            background-color: black;
+            color: white;
+        }
+        .table-list th:nth-child(3) {
+            width: 10%;
+            padding-top: 12px;
+            padding-bottom: 12px;
+            background-color: black;
+            color: white;
+        }
+        .table-list th:nth-child(4) {
+            width: 50%;
+            padding-top: 12px;
+            padding-bottom: 12px;
+            background-color: black;
+            color: white;
+        }
+        .table-list tr:nth-child(even) {
+            background-color: #c8c8c8;
+        }
+        .table-list tr:nth-child(odd) {
+            background-color: #dcdcdc;
+        }
+
     </style>
 </head>
 <body>
@@ -104,6 +148,28 @@
 
     </div>
 
+    <br>
+
+    <div class="table-list">
+        <table>
+            <thead>
+            <tr>
+                <th>NO</th>
+                <th>로그인 일자</th>
+                <th>접속 IP</th>
+                <th>접속 UserAgent</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="x, iterStat : ${historyList}">
+                <td th:text="${historyList.size() - iterStat.index}">0000</td>
+                <td th:text="${x.loginDtText}">0000.00.00 00:00</td>
+                <td th:text="${x.connectIp}">000.000.000.000</td>
+                <td th:text="${x.connectUserAgent}">000.000.000.000</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
 </body>
 </html>
