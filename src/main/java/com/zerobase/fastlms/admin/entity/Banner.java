@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.io.File;
 
 @Getter
 @Setter
@@ -20,10 +19,11 @@ public class Banner {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private File imageFile;
+    private String imageFile;
+    private String bannerName;
     private String alterText;
     private String url;
-    private String target;
-    private String sortOrder;
+    private String openTarget;
+    private int sortOrder;
     private boolean isPublic;
 }

@@ -12,9 +12,10 @@ import java.io.File;
 public class BannerDto {
 
     private File imageFile;
+    private String bannerName;
     private String alterText;
     private String url;
-    private String target;
+    private String openTarget;
     private String sortOrder;
     private boolean isPublic;
 
