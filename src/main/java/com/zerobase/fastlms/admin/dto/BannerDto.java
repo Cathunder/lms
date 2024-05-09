@@ -3,6 +3,9 @@ package com.zerobase.fastlms.admin.dto;
 import com.zerobase.fastlms.admin.entity.Banner;
 import lombok.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,9 +20,10 @@ public class BannerDto {
     private String openTarget;
     private int sortOrder;
     private boolean isPublic;
+    private LocalDateTime regDt;
 
-    //추가컬럼
     long totalCount;
+    long seq;
 
     public static BannerDto fromEntity(Banner banner) {
         return BannerDto.builder()
@@ -30,6 +34,12 @@ public class BannerDto {
                 .openTarget(banner.getOpenTarget())
                 .sortOrder(banner.getSortOrder())
                 .isPublic(banner.isPublic())
+                .regDt(banner.getRegDt())
                 .build();
+    }
+
+    public String getRegDtText() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+        return regDt != null ? regDt.format(formatter) : "";
     }
 }

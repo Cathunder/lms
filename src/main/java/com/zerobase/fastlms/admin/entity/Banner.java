@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -26,4 +27,5 @@ public class Banner {
     private String openTarget;
     private int sortOrder;
     private boolean isPublic;
+    private LocalDateTime regDt;
 }

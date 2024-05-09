@@ -2,6 +2,8 @@ package com.zerobase.fastlms.admin.model;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 public class BannerInput {
 
@@ -12,4 +14,5 @@ public class BannerInput {
     private String openTarget;
     private int sortOrder;
     private boolean isPublic;
+    private LocalDateTime regDt;
 }

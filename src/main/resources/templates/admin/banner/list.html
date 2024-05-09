@@ -20,22 +20,27 @@
             font-weight: bold;
             color: red;
         }
+
+        .sub-menu {
+            display: inline;
+        }
     </style>
 </head>
 <body>
     <div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>
     <h1>배너 관리</h1>
 
-    <div>
+    <div class="sub-menu">
         <a href="register.do">배너 등록</a>
         <span>&nbsp;</span>
-        <a href="list.do">선택 삭제</a>
+        <a href="list.do" >선택 삭제</a>
+        <p class="total-count" style="float: right">전체 <span th:text="${totalCount}"></span>개</p>
     </div>
 
     <div class="list" >
 
         <table>
-            <tbody>
+            <thead>
                 <tr>
                     <th>
                         <input type="checkbox" />
@@ -45,22 +50,18 @@
                     <th>이미지</th>
                     <th>등록일</th>
                 </tr>
-                <tr>
+            </thead>
+            <tbody>
+                <tr th:each="x, y : ${banners}">
                     <td>
                         <input type="checkbox" />
                     </td>
+                    <td th:text="${y.index + 1}">1</td>
+                    <td th:text="${x.bannerName}">배너이름</td>
                     <td>
-
+                        <img th:src="${x.imagePath}" alt="대체대체"/>
                     </td>
-                    <td>
-
-                    </td>
-                    <td>
-
-                    </td>
-                    <td>
-
-                    </td>
+                    <td th:text="${x.regDtText}">등록일</td>
                 </tr>
             </tbody>
         </table>

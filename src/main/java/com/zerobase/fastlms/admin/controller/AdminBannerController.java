@@ -36,12 +36,15 @@ public class AdminBannerController extends BaseController {
         List<BannerDto> banners = bannerService.list(parameter);
 
         long totalCount = 0;
-        if (banners != null && banners.size() > 0) {
+        if (!banners.isEmpty()) {
             totalCount = banners.get(0).getTotalCount();
         }
+
         String queryString = parameter.getQueryString();
         String pagerHtml = getPaperHtml(totalCount, parameter.getPageSize(), parameter.getPageIndex(), queryString);
 
+        model.addAttribute("banners", banners);
+        model.addAttribute("totalCount", totalCount);
         model.addAttribute("pager", pagerHtml);
 
         return "admin/banner/list";
