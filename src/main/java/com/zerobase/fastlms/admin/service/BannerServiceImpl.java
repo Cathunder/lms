@@ -21,7 +21,7 @@ public class BannerServiceImpl implements BannerService {
 
         Banner banner = Banner.builder()
                 .bannerName(bannerInput.getBannerName())
-                .imageFile(bannerInput.getImageFile())
+                .imagePath(bannerInput.getImagePath())
                 .alterText(bannerInput.getAlterText())
                 .url(bannerInput.getUrl())
                 .openTarget(bannerInput.getOpenTarget())

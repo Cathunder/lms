@@ -19,7 +19,7 @@ public class Banner {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String imageFile;
+    private String imagePath;
     private String bannerName;
     private String alterText;
     private String url;

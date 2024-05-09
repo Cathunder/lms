@@ -21,38 +21,38 @@
 
         <div class="register">
 
-            <form method="post" action="register.do">
+            <form method="post" action="register.do" enctype="multipart/form-data">
 
                 <table>
                     <tbody>
                         <tr>
                             <th>배너명</th>
                             <td>
-                                <input type="text" name="bannerName" placeholder="배너명 입력"/>
+                                <input type="text" name="bannerName" placeholder="배너명 입력" required/>
                             </td>
                         </tr>
                         <tr>
                             <th>대체 텍스트</th>
                             <td>
-                                <input type="text" name="alterText" placeholder="대체 텍스트 입력"/>
+                                <input type="text" name="alterText" placeholder="대체 텍스트 입력" required/>
                             </td>
                         </tr>
                         <tr>
                             <th>배너 파일</th>
                             <td>
-                                <input type="file" id="bannerImage" accept="image/*">
+                                <input type="file" name="bannerImage" accept="image/*" required>
                             </td>
                         </tr>
                         <tr>
                             <th>링크 주소</th>
                             <td>
-                                <input type="text" id="url" placeholder="링크 주소 입력"/>
+                                <input type="text" name="url" placeholder="링크 주소 입력" required/>
                             </td>
                         </tr>
                         <tr>
                             <th>오픈 방법</th>
                             <td>
-                                <select name="target" id="openMethod">
+                                <select name="openTarget" id="openTarget">
                                     <option value="choose">오픈 방법 선택</option>
                                     <option value="current">현재창</option>
                                     <option value="new">새로운창</option>
@@ -62,14 +62,16 @@
                         <tr>
                             <th>정렬 순서</th>
                             <td>
-                                <input type="text" id="sortOrder" placeholder="정렬 순서 입력"/>
+                                <input type="number" name="sortOrder" placeholder="정렬 순서 입력" required/>
                             </td>
                         </tr>
                         <tr>
                             <th>공개 여부</th>
                             <td>
-                                <input type="checkbox" id="public" />
-                                <label for="public">공개</label>
+                                <label for="public">
+                                    <input type="checkbox" id="public" name="public"/>
+                                    공개
+                                </label>
                             </td>
                         </tr>
                     </tbody>
