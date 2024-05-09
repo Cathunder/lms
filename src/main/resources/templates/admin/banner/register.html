@@ -4,7 +4,13 @@
     <meta charset="UTF-8">
     <title>관리자 화면 </title>
     <style>
-
+        .register table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .register table th, .register table td {
+            border: solid 1px #000;
+        }
     </style>
 </head>
 <body>
@@ -12,52 +18,62 @@
     <h1>배너 관리 - 배너 등록</h1>
 
 
-    <div class="detail" >
+    <div class="register" >
 
         <table>
             <tbody>
                 <tr>
                     <th>배너명</th>
                     <td>
-                        <p>asd</p>
+                        <input type="text" placeholder="배너명 입력"/>
                     </td>
                 </tr>
                 <tr>
                     <th>배너 파일</th>
                     <td>
-                        <p>asd</p>
+                        <input type="file" id="bannerImage" accept="image/*">
                     </td>
                 </tr>
                 <tr>
                     <th>링크 주소</th>
                     <td>
-                        <p>asd</p>
+                        <input type="text" placeholder="링크 주소 입력"/>
                     </td>
                 </tr>
                 <tr>
-                    <th>오픈방법</th>
+                    <th>오픈 방법</th>
                     <td>
-                        <p>asd</p>
+                        <form action="#">
+                            <label for="openMethod"></label>
+                            <select name="languages" id="openMethod">
+                                <option value="choose">오픈 방법 선택</option>
+                                <option value="current">현재창</option>
+                                <option value="new">새로운창</option>
+                            </select>
+                        </form>
                     </td>
                 </tr>
                 <tr>
                     <th>정렬 순서</th>
                     <td>
-                        <p>asd</p>
+                        <input type="text" placeholder="정렬 순서 입력"/>
                     </td>
                 </tr>
                 <tr>
                     <th>공개 여부</th>
                     <td>
-                        <p>asd</p>
+                        <input type="checkbox" id="public" />
+                        <label for="public">공개</label>
                     </td>
                 </tr>
             </tbody>
         </table>
 
-        <div>
-            <a href="list.do"> 배너 등록하기 </a>
-            <a href="list.do"> 목록 </a>
+        <br>
+        <div style="text-align:center">
+            <a href="list.do">배너 등록하기</a>
+            <span>&nbsp;</span>
+            <a href="list.do">목록 이동</a>
         </div>
 
     </div>
