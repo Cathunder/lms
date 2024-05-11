@@ -1,6 +1,7 @@
 package com.zerobase.fastlms.admin.model;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -10,7 +11,7 @@ public class BannerInput {
     private Long id;
     private String bannerName;
     private String alterText;
-    private String imagePath;
+    private MultipartFile imagePath;
     private String url;
     private String openTarget;
     private int sortOrder;

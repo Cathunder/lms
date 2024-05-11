@@ -8,8 +8,10 @@ import com.zerobase.fastlms.admin.model.BannerParam;
 import com.zerobase.fastlms.admin.repository.BannerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,11 +19,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class BannerServiceImpl implements BannerService {
+
+    @Value("${uploadPath}")
+    private String uploadPath;
 
     private final BannerRepository bannerRepository;
     private final BannerMapper bannerMapper;
@@ -29,9 +35,14 @@ public class BannerServiceImpl implements BannerService {
     @Override
     public boolean register(BannerInput bannerInput) {
 
+        String fileName = getFileName(bannerInput);
+        if (fileName == null) {
+            return false;
+        }
+
         Banner banner = Banner.builder()
                 .bannerName(bannerInput.getBannerName())
-                .imagePath(bannerInput.getImagePath())
+                .imageName(fileName)
                 .alterText(bannerInput.getAlterText())
                 .url(bannerInput.getUrl())
                 .openTarget(bannerInput.getOpenTarget())
@@ -43,6 +54,25 @@ public class BannerServiceImpl implements BannerService {
         bannerRepository.save(banner);
 
         return true;
+    }
+
+    private String getFileName(BannerInput bannerInput) {
+        MultipartFile multipartFile = bannerInput.getImagePath();
+        if (multipartFile.isEmpty()) {
+            return null;
+        }
+
+        String uploadDir = uploadPath;
+        String fileName = UUID.randomUUID() + "_" + multipartFile.getOriginalFilename();
+
+        Path filePath = Paths.get(uploadDir, fileName);
+
+        try {
+            Files.write(filePath, multipartFile.getBytes());
+            return fileName;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -73,8 +103,15 @@ public class BannerServiceImpl implements BannerService {
     public boolean update(BannerInput bannerInput) {
         Banner banner = bannerRepository.findById(bannerInput.getId()).orElseThrow(RuntimeException::new);
 
+        deleteImg(banner.getImageName());
+
+        String fileName = getFileName(bannerInput);
+        if (fileName == null) {
+            return false;
+        }
+
         banner.setBannerName(bannerInput.getBannerName());
-        banner.setImagePath(bannerInput.getImagePath());
+        banner.setImageName(fileName);
         banner.setAlterText(bannerInput.getAlterText());
         banner.setUrl(bannerInput.getUrl());
         banner.setOpenTarget(bannerInput.getOpenTarget());
@@ -90,15 +127,15 @@ public class BannerServiceImpl implements BannerService {
     @Override
     public void delete(List<Long> idList) {
         bannerRepository.findAllById(idList)
-                .forEach(banner -> deleteImg(banner.getImagePath()));
+                .forEach(banner -> deleteImg(banner.getImageName()));
 
         bannerRepository.deleteAllById(idList);
     }
 
-    private void deleteImg(String imgPath) {
-        Path path = Paths.get("src/main/resources/static/res/se2/img/banner/" + imgPath);
+    private void deleteImg(String imgName) {
+        Path path = Paths.get(uploadPath + imgName);
         if (Files.exists(path)){
-            if (imgPath == null){
+            if (imgName == null){
                 return;
             }
 

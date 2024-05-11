@@ -32,3 +32,5 @@ mybatis:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+
+uploadPath: "src/main/resources/static/res/se2/img/banner/"

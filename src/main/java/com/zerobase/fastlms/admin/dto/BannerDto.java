@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 public class BannerDto {
 
     private Long id;
-    private String imagePath;
+    private String imageName;
     private String bannerName;
     private String alterText;
     private String url;
@@ -29,7 +29,7 @@ public class BannerDto {
     public static BannerDto fromEntity(Banner banner) {
         return BannerDto.builder()
                 .id(banner.getId())
-                .imagePath(banner.getImagePath())
+                .imageName(banner.getImageName())
                 .bannerName(banner.getBannerName())
                 .alterText(banner.getAlterText())
                 .url(banner.getUrl())

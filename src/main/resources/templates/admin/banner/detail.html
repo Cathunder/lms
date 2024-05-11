@@ -17,12 +17,8 @@
     <div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>
     <h1>배너 관리 - 배너 수정</h1>
 
-
-
         <div class="register">
-
             <form th:action="${'detail.do?id=' + bannerDetail.id}" method="post" enctype="multipart/form-data">
-
                 <table>
                     <tbody>
                         <tr>
@@ -35,7 +31,7 @@
                         </tr>
                         <tr>
                             <th>배너 파일</th>
-                            <td><input th:src="${bannerDetail.imagePath}" type="file" name="bannerImage" accept="image/*" required></td>
+                            <td><input th:src="${bannerDetail.getImageName}" type="file" name="bannerImage" accept="image/*" required></td>
                         </tr>
                         <tr>
                             <th>링크 주소</th>
@@ -74,9 +70,7 @@
                     <span>&nbsp;</span>
                     <a href="list.do">목록 이동</a>
                 </div>
-
             </form>
-
         </div>
 
 
