@@ -12,5 +12,9 @@ public interface BannerService {
 
     boolean register(BannerInput bannerInput);
 
+    boolean update(BannerInput bannerInput);
+
     List<BannerDto> list(BannerParam parameter);
+
+    BannerDto detail(Long id);
 }

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>배너 수정 결과</title>
+</head>
+<body>
+
+    <div th:if="${result}">
+        <h1>배너 수정 완료</h1>
+        <div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>
+
+
+        <p>배너 수정이 완료되었습니다.</p>
+    </div>
+
+    <div th:if="${result eq false}">
+        <h1>배너 수정 실패</h1>
+        <div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>
+
+
+        <p>배너 수정에 실패했습니다.</p>
+    </div>
+
+
+
+</body>
+</html>

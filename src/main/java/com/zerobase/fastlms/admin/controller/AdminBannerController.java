@@ -77,4 +77,46 @@ public class AdminBannerController extends BaseController {
 
         return "admin/banner/register_complete";
     }
+
+    @GetMapping("/admin/banner/detail.do")
+    public String detail(Model model, BannerInput bannerInput) {
+
+        BannerDto bannerDetail = bannerService.detail(bannerInput.getId());
+        model.addAttribute("bannerDetail", bannerDetail);
+        log.info(bannerDetail.toString());
+
+        return "/admin/banner/detail";
+    }
+
+    @PostMapping("/admin/banner/detail.do")
+    public String modify(
+            Model model,
+            BannerInput parameter,
+            @RequestParam("bannerImage") MultipartFile file) {
+
+        log.info("수정요청보냄: " + parameter.getId());
+//        BannerDto bannerDto = bannerService.findById(parameter.getId());
+
+//        if (bannerDto != null) {
+            try {
+                String uploadDir = "src/main/resources/static/res/se2/img/banner";
+                String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+                Path filePath = Paths.get(uploadDir, fileName);
+                file.transferTo(filePath);
+
+                parameter.setImagePath(fileName);
+
+                boolean result = bannerService.update(parameter);
+                model.addAttribute("result", result);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                model.addAttribute("result", false);
+            }
+//        } else {
+//            model.addAttribute("result", false);
+//        }
+
+        return "admin/banner/modify_complete";
+    }
 }

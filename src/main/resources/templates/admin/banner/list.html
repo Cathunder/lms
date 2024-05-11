@@ -57,18 +57,20 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="x, y : ${banners}">
+                <tr th:each="banner, y : ${banners}">
                     <td>
                         <input type="checkbox" />
                     </td>
                     <td th:text="${y.index + 1}">1</td>
-                    <td th:text="${x.bannerName}">배너이름</td>
+                    <td>
+                        <a th:text="${banner.bannerName}" th:href="${'detail.do?id=' + banner.id}">배너이름</a>
+                    </td>
                     <td>
                         <div class="img-container">
-                            <img th:src="@{/res/se2/img/banner/{fileName}(fileName=${x.imagePath})}" width="120"/>
+                            <img th:src="@{/res/se2/img/banner/{fileName}(fileName=${banner.imagePath})}" width="120"/>
                         </div>
                     </td>
-                    <td th:text="${x.regDtText}">등록일</td>
+                    <td th:text="${banner.regDtText}">등록일</td>
                 </tr>
             </tbody>
         </table>

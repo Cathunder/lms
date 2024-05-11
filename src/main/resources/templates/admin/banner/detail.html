@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 화면 </title>
+    <style>
+        .register table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .register table th, .register table td {
+            border: solid 1px #000;
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>
+    <h1>배너 관리 - 배너 수정</h1>
+
+
+
+        <div class="register">
+
+            <form th:action="${'detail.do?id=' + bannerDetail.id}" method="post" enctype="multipart/form-data">
+
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>배너명</th>
+                            <td><input th:value="${bannerDetail.bannerName}" type="text" name="bannerName" placeholder="배너명 입력" required/></td>
+                        </tr>
+                        <tr>
+                            <th>대체 텍스트</th>
+                            <td><input th:value="${bannerDetail.alterText}" type="text" name="alterText" placeholder="대체 텍스트 입력" required/></td>
+                        </tr>
+                        <tr>
+                            <th>배너 파일</th>
+                            <td><input th:src="${bannerDetail.imagePath}" type="file" name="bannerImage" accept="image/*" required></td>
+                        </tr>
+                        <tr>
+                            <th>링크 주소</th>
+                            <td><input th:value="${bannerDetail.url}" type="text" name="url" placeholder="링크 주소 입력" required/></td>
+                        </tr>
+                        <tr>
+                            <th>오픈 방법</th>
+                            <td>
+                                <select name="openTarget" id="openTarget" th:value="${bannerDetail.openTarget}">
+                                    <option>오픈 방법 선택</option>
+                                    <option value="current" th:selected="${bannerDetail.openTarget} == 'current'">현재 창</option>
+                                    <option value="new" th:selected="${bannerDetail.openTarget} == 'new'">새로운 창</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>정렬 순서</th>
+                            <td><input th:value="${bannerDetail.sortOrder}" type="number" name="sortOrder" placeholder="정렬 순서 입력" required/></td>
+                        </tr>
+                        <tr>
+                            <th>공개 여부</th>
+                            <td>
+                                <label for="public">
+                                    <input th:checked="${bannerDetail.public}" type="checkbox" id="public" name="public"/>
+                                    공개
+                                </label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <br>
+
+                <div style="text-align:center">
+                    <input type="submit" value="배너 수정하기">
+                    <span>&nbsp;</span>
+                    <a href="list.do">목록 이동</a>
+                </div>
+
+            </form>
+
+        </div>
+
+
+</body>
+</html>

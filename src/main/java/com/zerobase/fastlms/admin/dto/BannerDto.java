@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 @Builder
 public class BannerDto {
 
+    private Long id;
     private String imagePath;
     private String bannerName;
     private String alterText;
@@ -27,6 +28,7 @@ public class BannerDto {
 
     public static BannerDto fromEntity(Banner banner) {
         return BannerDto.builder()
+                .id(banner.getId())
                 .imagePath(banner.getImagePath())
                 .bannerName(banner.getBannerName())
                 .alterText(banner.getAlterText())

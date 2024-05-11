@@ -1,7 +1,6 @@
 package com.zerobase.fastlms.admin.service;
 
 import com.zerobase.fastlms.admin.dto.BannerDto;
-import com.zerobase.fastlms.admin.dto.MemberDto;
 import com.zerobase.fastlms.admin.entity.Banner;
 import com.zerobase.fastlms.admin.mapper.BannerMapper;
 import com.zerobase.fastlms.admin.model.BannerInput;
@@ -56,5 +55,29 @@ public class BannerServiceImpl implements BannerService {
         }
 
         return list;
+    }
+
+    @Override
+    public BannerDto detail(Long id) {
+        Banner banner = bannerRepository.findById(id).orElseThrow(RuntimeException::new);
+        return BannerDto.fromEntity(banner);
+    }
+
+    @Override
+    public boolean update(BannerInput bannerInput) {
+        Banner banner = bannerRepository.findById(bannerInput.getId()).orElseThrow(RuntimeException::new);
+
+        banner.setBannerName(bannerInput.getBannerName());
+        banner.setImagePath(bannerInput.getImagePath());
+        banner.setAlterText(bannerInput.getAlterText());
+        banner.setUrl(bannerInput.getUrl());
+        banner.setOpenTarget(bannerInput.getOpenTarget());
+        banner.setSortOrder(bannerInput.getSortOrder());
+        banner.setPublic(bannerInput.isPublic());
+        banner.setRegDt(LocalDateTime.now());
+
+        bannerRepository.save(banner);
+
+        return true;
     }
 }
