@@ -24,6 +24,11 @@
         .sub-menu {
             display: inline;
         }
+
+        .img-container {
+            max-width: 100%;
+            height: auto;
+        }
     </style>
 </head>
 <body>
@@ -59,7 +64,9 @@
                     <td th:text="${y.index + 1}">1</td>
                     <td th:text="${x.bannerName}">배너이름</td>
                     <td>
-                        <img th:src="${x.imagePath}" alt="대체대체"/>
+                        <div class="img-container">
+                            <img th:src="@{/res/se2/img/banner/{fileName}(fileName=${x.imagePath})}" width="120"/>
+                        </div>
                     </td>
                     <td th:text="${x.regDtText}">등록일</td>
                 </tr>
