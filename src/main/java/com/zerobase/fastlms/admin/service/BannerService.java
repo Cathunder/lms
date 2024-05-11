@@ -17,4 +17,6 @@ public interface BannerService {
     List<BannerDto> list(BannerParam parameter);
 
     BannerDto detail(Long id);
+
+    void delete(List<Long> idList);
 }

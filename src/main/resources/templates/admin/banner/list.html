@@ -21,10 +21,6 @@
             color: red;
         }
 
-        .sub-menu {
-            display: inline;
-        }
-
         .img-container {
             max-width: 100%;
             height: auto;
@@ -35,11 +31,14 @@
     <div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>
     <h1>배너 관리</h1>
 
-    <div class="sub-menu">
-        <a href="register.do">배너 등록</a>
+    <div>
+        <a href="register.do" style="display: inline;">배너 등록</a>
         <span>&nbsp;</span>
-        <a href="list.do" >선택 삭제</a>
-        <p class="total-count" style="float: right">전체 <span th:text="${totalCount}"></span>개</p>
+        <form id="deleteForm" action="/admin/banner/delete.do" method="post" style="display: inline;">
+            <input type="hidden" id="selectedIds" name="idList">
+            <a href="#" onclick="deleteSelectedBanners(); return false;">선택 삭제</a>
+        </form>
+        <p class="total-count" style="display: inline; float: right; margin: 0;">전체 <span th:text="${totalCount}"></span>개</p>
     </div>
 
     <div class="list" >
@@ -48,7 +47,7 @@
             <thead>
                 <tr>
                     <th>
-                        <input type="checkbox" />
+                        <input type="checkbox" id="selectAll" class="deleteAll" onclick="toggleAllCheckboxes()" />
                     </th>
                     <th>NO</th>
                     <th>배너명</th>
@@ -59,7 +58,7 @@
             <tbody>
                 <tr th:each="banner, y : ${banners}">
                     <td>
-                        <input type="checkbox" />
+                        <input type="checkbox" class="selectOne" th:value="${banner.id}" onclick="toggleBannerCheckbox()" />
                     </td>
                     <td th:text="${y.index + 1}">1</td>
                     <td>
@@ -79,6 +78,45 @@
         </div>
 
     </div>
+
+    <script>
+        function toggleAllCheckboxes() {
+            let selectAllCheckbox = document.getElementById('selectAll');
+            let bannerCheckboxes = document.querySelectorAll('.selectOne');
+
+            for (let i = 0; i < bannerCheckboxes.length; i++) {
+                bannerCheckboxes[i].checked = selectAllCheckbox.checked;
+            }
+        }
+
+        function toggleBannerCheckbox() {
+            let bannerCheckboxes = document.querySelectorAll('.selectOne');
+            let allChecked = true;
+
+            for (let i = 0; i < bannerCheckboxes.length; i++) {
+                if (!bannerCheckboxes[i].checked) {
+                    allChecked = false;
+                    break;
+                }
+            }
+
+            document.getElementById('selectAll').checked = allChecked;
+        }
+
+        function deleteSelectedBanners() {
+            let selectedIds = [];
+            let bannerCheckboxes = document.querySelectorAll('.selectOne:checked');
+
+            for (let i = 0; i < bannerCheckboxes.length; i++) {
+                selectedIds.push(bannerCheckboxes[i].value);
+            }
+
+            let idString = selectedIds.join(',');
+            document.getElementById('selectedIds').value = idString;
+            document.getElementById('deleteForm').submit();
+        }
+
+    </script>
 
 </body>
 </html>

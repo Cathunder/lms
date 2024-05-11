@@ -83,7 +83,6 @@ public class AdminBannerController extends BaseController {
 
         BannerDto bannerDetail = bannerService.detail(bannerInput.getId());
         model.addAttribute("bannerDetail", bannerDetail);
-        log.info(bannerDetail.toString());
 
         return "/admin/banner/detail";
     }
@@ -94,29 +93,29 @@ public class AdminBannerController extends BaseController {
             BannerInput parameter,
             @RequestParam("bannerImage") MultipartFile file) {
 
-        log.info("수정요청보냄: " + parameter.getId());
-//        BannerDto bannerDto = bannerService.findById(parameter.getId());
+        try {
+            String uploadDir = "src/main/resources/static/res/se2/img/banner";
+            String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+            Path filePath = Paths.get(uploadDir, fileName);
+            file.transferTo(filePath);
 
-//        if (bannerDto != null) {
-            try {
-                String uploadDir = "src/main/resources/static/res/se2/img/banner";
-                String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-                Path filePath = Paths.get(uploadDir, fileName);
-                file.transferTo(filePath);
+            parameter.setImagePath(fileName);
 
-                parameter.setImagePath(fileName);
+            boolean result = bannerService.update(parameter);
+            model.addAttribute("result", result);
 
-                boolean result = bannerService.update(parameter);
-                model.addAttribute("result", result);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                model.addAttribute("result", false);
-            }
-//        } else {
-//            model.addAttribute("result", false);
-//        }
+        } catch (IOException e) {
+            e.printStackTrace();
+            model.addAttribute("result", false);
+        }
 
         return "admin/banner/modify_complete";
+    }
+
+    @PostMapping("/admin/banner/delete.do")
+    public String delete(@RequestParam("idList") List<Long> idList) {
+        bannerService.delete(idList);
+
+        return "redirect:/admin/banner/list.do";
     }
 }
