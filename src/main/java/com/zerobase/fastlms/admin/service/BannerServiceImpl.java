@@ -20,6 +20,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -145,5 +146,11 @@ public class BannerServiceImpl implements BannerService {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    @Override
+    public List<BannerDto> mainPageBannerList() {
+        List<Banner> bannerList = bannerRepository.findAllByOrderBySortOrderAsc();
+        return bannerList.stream().map(BannerDto::fromEntity).collect(Collectors.toList());
     }
 }

@@ -3,14 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>메인 페이지</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            $('#slider').bxSlider({
+                mode: 'horizontal',
+                speed: 500,
+                pager: true,
+                moveSlides: 1,
+                slideWidth: 600,
+                minSlides: 1,
+                maxSlides: 1,
+                slideMargin: 10,
+                auto: true,
+                autoHover: true,
+                controls: false
+            });
+        });
+    </script>
+
 </head>
 <body>
     <h1>메인 페이지 </h1>
     <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
 
-    <div>
-        <img src="/files/2021/09/05/6e5170576b0c4c29879e5334dfccab2d.png"/>
-    </div>
+    <ul id="slider">
+        <li th:each="banner : ${bannerList}">
+            <img th:src="${banner.imageName}" alt="bannerImg">
+        </li>
+    </ul>
 
 </body>
 </html>
