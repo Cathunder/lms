@@ -31,7 +31,10 @@
                         </tr>
                         <tr>
                             <th>배너 파일</th>
-                            <td><input th:src="${bannerDetail.getImageName}" type="file" name="bannerImage" accept="image/*" required></td>
+                            <td>
+                                <img th:src="@{${bannerDetail.imageName}}" width="120" alt="image">
+                                <input type="file" name="bannerImage" accept="image/*" required>
+                            </td>
                         </tr>
                         <tr>
                             <th>링크 주소</th>
