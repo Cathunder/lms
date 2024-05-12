@@ -4,39 +4,37 @@
     <meta charset="UTF-8">
     <title>메인 페이지</title>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
 
-    <link href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
-
-    <script>
-        $(document).ready(function(){
-            $('#slider').bxSlider({
-                mode: 'horizontal',
-                speed: 500,
-                pager: true,
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.slider').bxSlider({
+                mode: 'fade',
                 moveSlides: 1,
-                slideWidth: 600,
-                minSlides: 1,
-                maxSlides: 1,
-                slideMargin: 10,
+                speed: 500,
                 auto: true,
-                autoHover: true,
-                controls: false
+                infiniteLoop: true,
+                pager: true,
+                touchEnabled : false
             });
         });
     </script>
-
 </head>
 <body>
     <h1>메인 페이지 </h1>
     <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
 
-    <ul id="slider">
-        <li th:each="banner : ${bannerList}">
-            <img th:src="${banner.imageName}" alt="bannerImg">
-        </li>
-    </ul>
+    <div class="slider">
+        <div th:each="banner : ${bannerList}">
+            <li>
+                <a th:href="${banner.url}" th:target="${banner.openTarget == 'new' ? '_blank' : '_self'}">
+                    <img th:src="${banner.imageName}" th:alt="${banner.alterText}">
+                </a>
+            </li>
+        </div>
+    </div>
 
 </body>
 </html>
