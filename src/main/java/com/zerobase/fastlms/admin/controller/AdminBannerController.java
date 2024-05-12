@@ -55,7 +55,7 @@ public class AdminBannerController extends BaseController {
             Model model, BannerInput bannerInput,
             @RequestParam("bannerImage") MultipartFile file) {
 
-        bannerInput.setImagePath(file);
+        bannerInput.setImageFile(file);
         boolean result = bannerService.register(bannerInput);
         model.addAttribute("result", result);
 
@@ -77,7 +77,7 @@ public class AdminBannerController extends BaseController {
             BannerInput bannerInput,
             @RequestParam("bannerImage") MultipartFile file) {
 
-        bannerInput.setImagePath(file);
+        bannerInput.setImageFile(file);
         boolean result = bannerService.update(bannerInput);
         model.addAttribute("result", result);
 

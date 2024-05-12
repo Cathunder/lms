@@ -57,18 +57,18 @@ public class BannerServiceImpl implements BannerService {
     }
 
     private String getFileName(BannerInput bannerInput) {
-        MultipartFile multipartFile = bannerInput.getImagePath();
+        MultipartFile multipartFile = bannerInput.getImageFile();
         if (multipartFile.isEmpty()) {
             return null;
         }
 
         String uploadDir = uploadPath;
-        String fileName = UUID.randomUUID() + "_" + multipartFile.getOriginalFilename();
-
-        Path filePath = Paths.get(uploadDir, fileName);
+        String UUIDFileName = UUID.randomUUID() + "_" + multipartFile.getOriginalFilename();    // 파일명생성
+        Path path = Paths.get("src/main/resources/static/bannerImg/", UUIDFileName);    // 파일을 저장할 위치
 
         try {
-            Files.write(filePath, multipartFile.getBytes());
+            String fileName = uploadDir + UUIDFileName;
+            Files.write(path, multipartFile.getBytes());    // path에 파일저장
             return fileName;
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -83,7 +83,7 @@ public class BannerServiceImpl implements BannerService {
         List<BannerDto> list = bannerMapper.selectList(parameter);
         if (!CollectionUtils.isEmpty(list)) {
             int i = 0;
-            for(BannerDto x : list) {
+            for (BannerDto x : list) {
                 x.setTotalCount(totalCount);
                 x.setSeq(totalCount - parameter.getPageStart() - i);
                 i++;
@@ -133,15 +133,15 @@ public class BannerServiceImpl implements BannerService {
     }
 
     private void deleteImg(String imgName) {
-        Path path = Paths.get(uploadPath + imgName);
-        if (Files.exists(path)){
-            if (imgName == null){
+        Path path = Paths.get("src/main/resources/static" + imgName);
+        if (Files.exists(path)) {
+            if (imgName == null) {
                 return;
             }
 
-            try{
+            try {
                 Files.delete(path);
-            }catch (IOException e){
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }

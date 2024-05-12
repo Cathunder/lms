@@ -11,7 +11,7 @@ public class BannerInput {
     private Long id;
     private String bannerName;
     private String alterText;
-    private MultipartFile imagePath;
+    private MultipartFile imageFile;
     private String url;
     private String openTarget;
     private int sortOrder;
