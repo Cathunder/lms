@@ -17,7 +17,7 @@
                 auto: true,
                 infiniteLoop: true,
                 pager: true,
-                touchEnabled : false
+                touchEnabled : false,
             });
         });
     </script>
@@ -26,15 +26,15 @@
     <h1>메인 페이지 </h1>
     <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
 
-    <div class="slider">
-        <div th:each="banner : ${bannerList}">
-            <li>
+    <ul class="slider">
+        <li th:each="banner : ${bannerList}">
+            <th:block th:if="${banner.public}">
                 <a th:href="${banner.url}" th:target="${banner.openTarget == 'new' ? '_blank' : '_self'}">
                     <img th:src="${banner.imageName}" th:alt="${banner.alterText}">
                 </a>
-            </li>
-        </div>
-    </div>
+            </th:block>
+        </li>
+    </ul>
 
 </body>
 </html>
