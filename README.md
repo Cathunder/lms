@@ -14,6 +14,8 @@
 
 <details>
   <summary>배너관리(백오피스 기능)</summary>
+
+  - 배너 등록, 수정, 삭제 기능
   
   <img width="1440" alt="image" src="https://github.com/user-attachments/assets/4033e743-c72e-4345-bc80-f9766999c899">
   
@@ -22,6 +24,8 @@
 
 <details>
   <summary>메인페이지에 배너관리페이지에서 등록한 배너 노출 기능</summary>
+
+  - 배너 클릭시 배너에 등록된 주소로 이동
   
   <img width="1440" alt="image" src="https://github.com/user-attachments/assets/b06e4448-a45e-4333-92dd-0f4e5b19847c">
 </details>
